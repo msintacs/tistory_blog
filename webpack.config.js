@@ -1,18 +1,18 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const TistoryMockingPlugin = require('./tistory-mocking-plugin');
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const TistoryMockingPlugin = require("./tistory-mocking-plugin");
 
 // 개발 모드인지 확인하는 변수 정의
-const isDev = process.env.NODE_ENV !== 'production';
+const isDev = process.env.NODE_ENV !== "production";
 
 module.exports = {
-  mode: 'development',
-  entry: './src/scripts/index.js',
+  mode: "development",
+  entry: "./src/scripts/index.js",
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'js/script.js',
-    publicPath: '/',
+    path: path.resolve(__dirname, "dist"),
+    filename: "js/script.js",
+    publicPath: "/",
   },
   module: {
     rules: [
@@ -20,62 +20,62 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader',
+          loader: "babel-loader",
           options: {
-            presets: ['@babel/preset-env', '@babel/preset-react']
-          }
-        }
+            presets: ["@babel/preset-env", "@babel/preset-react"],
+          },
+        },
       },
       {
         test: /\.css$/,
         use: [
-          isDev ? 'style-loader' : MiniCssExtractPlugin.loader,
-          'css-loader',
-          'postcss-loader'
-        ]
+          isDev ? "style-loader" : MiniCssExtractPlugin.loader,
+          "css-loader",
+          "postcss-loader",
+        ],
       },
       {
         test: /\.(png|jpe?g|gif|svg|webp)$/i,
         use: [
           {
-            loader: 'file-loader',
+            loader: "file-loader",
             options: {
-              name: '[name].[ext]',
-              outputPath: 'images',
-            }
-          }
-        ]
+              name: "[name].[ext]",
+              outputPath: "images",
+            },
+          },
+        ],
       },
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/i,
         use: [
           {
-            loader: 'file-loader',
+            loader: "file-loader",
             options: {
-              name: '[name].[ext]',
-              outputPath: 'fonts',
-            }
-          }
-        ]
-      }
-    ]
+              name: "[name].[ext]",
+              outputPath: "fonts",
+            },
+          },
+        ],
+      },
+    ],
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './src/index.html',
-      filename: 'index.html',
+      template: "./src/index.html",
+      filename: "index.html",
     }),
     new TistoryMockingPlugin({
-      title: '개발 테스트 블로그',
-      blog_link: 'http://localhost:3000',
+      title: "개발 테스트 블로그",
+      blog_link: "http://localhost:3000",
     }),
     new MiniCssExtractPlugin({
-      filename: 'css/style.css',
-    })
+      filename: "css/style.css",
+    }),
   ],
   devServer: {
     static: {
-      directory: path.join(__dirname, 'dist'),
+      directory: path.join(__dirname, "dist"),
     },
     historyApiFallback: true,
     port: 9000,
